@@ -125,7 +125,7 @@ alias ld=lazydocker
 alias z=zellij
 alias za="zellij attach --create"
 alias zd="zellij delete-session --force"
-alias znw='f() { ZNAME="$1"; DIRNAME="${ZNAME//\//-}"; git worktree add ../$DIRNAME && cd ../$DIRNAME && za $ZNAME; }; f'
+alias znw='f() { CURRENT_DIR=$(basename "$PWD"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cd ../$DIRNAME && za $SESSION_NAME; }; f'
 alias claude='claude --dangerously-skip-permissions'
 alias myip='curl http://ipecho.net/plain'
 
