@@ -131,6 +131,35 @@ alias gwp='f() { CURRENT_DIR=$(basename "$(dirname "$PWD")"); REMOTE_BRANCH="$1"
 alias myip='curl http://ipecho.net/plain'
 alias python="uv run python"
 alias anki-iframe='f() { INPUT="$1"; if [[ "$INPUT" == http://* ]] || [[ "$INPUT" == https://* ]]; then URL="$INPUT"; else URL="https://blog.rookedsysc.com$INPUT"; fi; printf "[Link](%s)\n\n<iframe width=\"100%%\" height=\"2000\" src=\"%s\"></iframe>" "$URL" "$URL" | pbcopy; echo "Copied to clipboard!"; }; f'
+# 복사 리눅스 맥 둘 다 됨
+clip() {
+    local os_name=$(uname -s)
+    
+    if [[ "$os_name" == "Linux" ]]; then
+        # WSL 환경 확인 (Linux이지만 Windows 내부)
+        if [[ -f /proc/version ]] && grep -q microsoft /proc/version; then
+            cat | clip.exe
+        elif command -v wl-copy > /dev/null 2>&1; then
+            # Wayland 환경
+            cat | wl-copy
+        elif command -v xclip > /dev/null 2>&1; then
+            # X11 환경
+            cat | xclip -selection clipboard
+        else
+            echo "Error: neither 'xclip' nor 'wl-copy' is installed" >&2
+            return 1
+        fi
+    elif [[ "$os_name" == "Darwin" ]]; then
+        # macOS
+        cat | pbcopy
+    elif [[ "$os_name" =~ ^(MINGW|MSYS|CYGWIN) ]]; then
+        # Windows 환경 (Git Bash, MSYS2 등)
+        cat | clip.exe
+    else
+        echo "Unsupported OS: $os_name" >&2
+        return 1
+    fi
+}
 
 # terminal에서 option + 방향키 동작 안함
 # 참조 https://edykim.com/ko/post/setting-opt-direction-keys-when-using-zsh-in-iterm/
