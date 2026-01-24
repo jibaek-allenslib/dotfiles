@@ -108,10 +108,6 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
 # path
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export NVM_DIR="$HOME/.nvm"
@@ -122,42 +118,18 @@ alias vi=nvim
 alias vim=nvim
 alias lg=lazygit
 alias ld=lazydocker
+alias cpai='f() { TARGET_DIR="${1:-.}"; cp -r .github .claude .agent .gemini CLAUDE.md CLAUDE.local.md AGENTS.md GEMINI.md "$TARGET_DIR/" 2>/dev/null && echo "AI config files copied to $TARGET_DIR" || echo "Some files may not exist"; }; f'
 alias z=zellij
 alias za="zellij attach --create"
 alias zd="zellij delete-session --force"
-alias znw='f() { CURRENT_DIR=$(basename "$PWD"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cd ../$DIRNAME && za $SESSION_NAME; }; f'
-alias claude='claude --dangerously-skip-permissions'
+alias zwn='f() { CURRENT_DIR=$(basename "$(dirname "$PWD")"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cpai ../$DIRNAME && cd ../$DIRNAME && za $SESSION_NAME; }; f'
+# 새로운 워크트리 생성
+alias gwn='f() { CURRENT_DIR=$(basename "$(dirname "$PWD")"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cd ../$DIRNAME; }; f'
+# 원격 브랜치로부터 워크트리 생성
+alias gwp='f() { CURRENT_DIR=$(basename "$(dirname "$PWD")"); REMOTE_BRANCH="$1"; LOCAL_BRANCH="${REMOTE_BRANCH#*/}"; DIRNAME="${CURRENT_DIR}-${LOCAL_BRANCH//\//-}"; git worktree add -b "$LOCAL_BRANCH" "../$DIRNAME" "$REMOTE_BRANCH" && cd "../$DIRNAME"; }; f'
 alias myip='curl http://ipecho.net/plain'
-
-# alias function 
-clip() {
-    local os_name=$(uname -s)
-    
-    if [[ "$os_name" == "Linux" ]]; then
-        # WSL 환경 확인 (Linux이지만 Windows 내부)
-        if [[ -f /proc/version ]] && grep -q microsoft /proc/version; then
-            cat | clip.exe
-        elif command -v wl-copy > /dev/null 2>&1; then
-            # Wayland 환경
-            cat | wl-copy
-        elif command -v xclip > /dev/null 2>&1; then
-            # X11 환경
-            cat | xclip -selection clipboard
-        else
-            echo "Error: neither 'xclip' nor 'wl-copy' is installed" >&2
-            return 1
-        fi
-    elif [[ "$os_name" == "Darwin" ]]; then
-        # macOS
-        cat | pbcopy
-    elif [[ "$os_name" =~ ^(MINGW|MSYS|CYGWIN) ]]; then
-        # Windows 환경 (Git Bash, MSYS2 등)
-        cat | clip.exe
-    else
-        echo "Unsupported OS: $os_name" >&2
-        return 1
-    fi
-}
+alias python="uv run python"
+alias anki-iframe='f() { INPUT="$1"; if [[ "$INPUT" == http://* ]] || [[ "$INPUT" == https://* ]]; then URL="$INPUT"; else URL="https://blog.rookedsysc.com$INPUT"; fi; printf "[Link](%s)\n\n<iframe width=\"100%%\" height=\"2000\" src=\"%s\"></iframe>" "$URL" "$URL" | pbcopy; echo "Copied to clipboard!"; }; f'
 
 # terminal에서 option + 방향키 동작 안함
 # 참조 https://edykim.com/ko/post/setting-opt-direction-keys-when-using-zsh-in-iterm/
