@@ -6,6 +6,8 @@ panes:
 files:
   copy:
     - .env
+    - .idea
+    - .vscode
 
 status_icons:
   working: "🤖" # Agent is processing
