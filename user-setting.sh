@@ -22,6 +22,7 @@ echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>~/.bashrc
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 brew install git wget curl zsh
+brew install tmux raine/workmux/workmux
 
 # 언어팩 설치
 sudo apt install locales
@@ -30,6 +31,10 @@ sudo update-locale LANG=en_US.UTF-8
 
 # Cargo / Rust Install
 curl https://sh.rustup.rs -sSf | sh
+
+# NVM Install
+curl -o install_nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh
+
 
 # ssh setting
 
