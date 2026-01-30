@@ -62,8 +62,6 @@ fc-cache -vf
 mv 10-powerline-symbols.conf /etc/fonts/conf.d
 
 # Utils
-# Zellij
-cargo install --locked zellij
 # LazyVim
 brew install nvim
 brew install jesseduffield/lazydocker/lazydocker
