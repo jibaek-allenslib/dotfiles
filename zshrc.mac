@@ -137,7 +137,6 @@ alias vi=nvim
 alias vim=nvim
 alias lg=lazygit
 alias ld=lazydocker
-alias cpai='f() { TARGET_DIR="${1:-.}"; cp -r .github .claude .agent .gemini CLAUDE.md CLAUDE.local.md AGENTS.md GEMINI.md "$TARGET_DIR/" 2>/dev/null && echo "AI config files copied to $TARGET_DIR" || echo "Some files may not exist"; }; f'
 alias wm=workmux
 unalias tm 2>/dev/null
 tm() {
