@@ -130,8 +130,12 @@ tm() {
     new-session|ns)
       # 세션이 존재하는지 확인
       if tmux has-session -t "$2" 2>/dev/null; then
-        # 이미 존재하면 attach
-        tmux attach -t "$2"
+        # 이미 존재하면 attach 또는 switch
+        if [ -n "$TMUX" ]; then
+          tmux switch-client -t "$2"
+        else
+          tmux attach -t "$2"
+        fi
       else
         # 없으면 새로 생성
         tmux new -s "$2"
@@ -141,7 +145,12 @@ tm() {
       # 인자가 하나만 있고 tmux 세션 이름으로 사용 가능한 경우, 세션에 attach 또는 생성
       if [ $# -eq 1 ] && [ -n "$1" ]; then
         if tmux has-session -t "$1" 2>/dev/null; then
-          tmux attach -t "$1"
+          # 이미 존재하면 attach 또는 switch
+          if [ -n "$TMUX" ]; then
+            tmux switch-client -t "$1"
+          else
+            tmux attach -t "$1"
+          fi
         else
           tmux new -s "$1"
         fi
