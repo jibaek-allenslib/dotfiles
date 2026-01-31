@@ -6,8 +6,17 @@ panes:
 files:
   copy:
     - .env
+  symlink:
+    # - node_modules
+    # - .pnpm-store
     - .idea
     - .vscode
+    - .gemini
+    - .claude
+    - .github/prompts
+    - CLAUDE.local.md
+    - GEMINI.md
+    - AGENTS.md
 
 status_icons:
   working: "🤖" # Agent is processing
