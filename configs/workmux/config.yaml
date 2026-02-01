@@ -6,9 +6,6 @@ panes:
 files:
   copy:
     - .env
-  symlink:
-    # - node_modules
-    # - .pnpm-store
     - .idea
     - .vscode
     - .gemini
