@@ -138,6 +138,8 @@ alias vim=nvim
 alias lg=lazygit
 alias ld=lazydocker
 alias wm=workmux
+alias ts="tmux ls | cut -d: -f1 | fzf --height 40% --reverse | pbcopy"
+alias ws="wm ls | awk 'NR>1 {print \$1}' | fzf-tmux -p 55%,60% --reverse | pbcopy"
 unalias tm 2>/dev/null
 tm() {
   case "$1" in
