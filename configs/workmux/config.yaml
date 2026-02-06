@@ -1,8 +1,9 @@
 nerdfont: true
 
 panes:
-  - command:
+  - command: claude --dangerously-skip-permissions
   - split: horizontal
+    focus: true
 
 files:
   copy:
