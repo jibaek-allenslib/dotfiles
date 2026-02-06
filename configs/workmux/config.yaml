@@ -1,5 +1,10 @@
 nerdfont: true
 
+panes:
+  - command: claude --dangerously-skip-permissions
+  - split: horizontal
+    focus: true
+
 files:
   copy:
     - .env
